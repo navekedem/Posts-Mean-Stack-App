@@ -75,6 +75,7 @@ router.get("/:id",(req,res,next) => {
   Post.findById(req.params.id).then(post => {
     if(post){
       res.status(200).json(post);
+      
     }else{
       res.status(404).json({message: "Post Not Found"});
     }
@@ -82,11 +83,22 @@ router.get("/:id",(req,res,next) => {
 })
 
 router.get("", (req, res, next) => {
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const pageQuery = Post.find();
+  let fetchPosts;
+  if(pageSize && currentPage){
+    pageQuery.skip(pageSize *(currentPage - 1)).limit(pageSize);
+  }
 
-  Post.find().then(documents => {
+  pageQuery.find().then(documents => {
+    fetchPosts = documents;
+    return Post.count();
+  }).then(count => {
     res.status(200).json({
       message: "Posts SeccseusFully fetch",
-      posts: documents
+      posts: fetchPosts,
+      postsCount: count
     });
   });
 });
