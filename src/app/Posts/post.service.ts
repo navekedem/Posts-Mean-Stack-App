@@ -5,6 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { Router } from "@angular/router";
 
+
 @Injectable({ providedIn: "root" })
 export class PostService {
   private posts: Post[] = [];
@@ -26,7 +27,8 @@ export class PostService {
                 title: post.title,
                 content: post.content,
                 id: post._id,
-                imagePath: post.imagePath
+                imagePath: post.imagePath,
+                creator: post.creator
               };
             }),
             maxPosts: postsData.postsCount
@@ -34,6 +36,7 @@ export class PostService {
         })
       )
       .subscribe(newPostsData => {
+        console.log(newPostsData);
         this.posts = newPostsData.posts;
         this.postsUpdated.next({ posts: [...this.posts], postsCount: newPostsData.maxPosts});
       });
@@ -74,7 +77,8 @@ export class PostService {
         id: id,
         title: title,
         content: content,
-        imagePath: image
+        imagePath: image,
+        creator: null
       };
     }
 
@@ -92,6 +96,7 @@ export class PostService {
       title: string;
       content: string;
       imagePath: string;
+      creator: string;
     }>("http://localhost:3000/api/posts/" + id);
   }
 
