@@ -47,6 +47,10 @@ router.post("",authCheck ,multer({storage: storage}).single('image'),(req, res, 
         ...resultPost,
         id: resultPost._id
       }
+    }).catch(error => {
+      res.status(500).json({
+        message: "Creating post failed"
+      })
     });
   });
 
@@ -72,7 +76,11 @@ router.put("/:id",authCheck,multer({storage: storage}).single('image'),(req,res,
       res.status(401).json({message: "User Not Auth"})
     }
 
-  })
+  }).catch(error => {
+    res.status(500).json({
+      message: "Update post failed"
+    })
+  });
 })
 
 
@@ -85,7 +93,11 @@ router.get("/:id",(req,res,next) => {
     }else{
       res.status(404).json({message: "Post Not Found"});
     }
-  })
+  }).catch(error => {
+    res.status(500).json({
+      message: "Fethcing post failed"
+    })
+  });
 })
 
 router.get("", (req, res, next) => {
@@ -105,6 +117,10 @@ router.get("", (req, res, next) => {
       message: "Posts SeccseusFully fetch",
       posts: fetchPosts,
       postsCount: count
+    }).catch(error => {
+      res.status(500).json({
+        message: "Fethcing posts failed"
+      })
     });
   });
 });
@@ -117,6 +133,10 @@ router.delete("/:id",authCheck,(req,res,next) => {
     }else {
       res.status(401).json({message: "User Not Auth"})
     }
+  }).catch(error => {
+    res.status(500).json({
+      message: "Delete post failed"
+    })
   });
 });
 

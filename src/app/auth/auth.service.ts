@@ -34,10 +34,10 @@ export class AuthService {
       email: email,
       password: password,
     };
-    this.http.post("http://localhost:3000/api/user/signup", authData).subscribe(response => {
-      console.log(response);
+    this.http.post("http://localhost:3000/api/user/signup", authData).subscribe(() => {
+
       this.router.navigate(['/login']);
-    })
+    } , error => { this.authStatus.next(false); })
   }
 
   login(email: string , password: string) {
@@ -58,7 +58,7 @@ export class AuthService {
         this.authStatus.next(true);
         this.router.navigate(['/']);
       }
-    });
+    },  error => { this.authStatus.next(false); });
   }
 
   autoAuthUser(){

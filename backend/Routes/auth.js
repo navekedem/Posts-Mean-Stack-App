@@ -20,7 +20,7 @@ router.post("/signup", (req, res, next) => {
       })
       .catch(err => {
         res.status(500).json({
-          erorr: err
+          message: "Invalid authentication"
         });
       });
   });
@@ -51,7 +51,7 @@ router.post('/login', (req,res,next) => {
     });
   }).catch(err => {
     return res.status(404).json({
-      message: "Auth Failed"
+      message: "Invalid authentication"
     });
   })
 })
