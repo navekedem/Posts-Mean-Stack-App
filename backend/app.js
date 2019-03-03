@@ -6,7 +6,7 @@ const authRoutes = require('./Routes/auth');
 const mongoose = require('mongoose');
 const path = require('path')
 
-mongoose.connect("mongodb+srv://Nave:8wmZa4Fpoqx08MWe@navek-vjwuz.mongodb.net/test?retryWrites=true" ,{ useNewUrlParser: true }).then(()=>{
+mongoose.connect("mongodb+srv://Nave:"+process.env.PASSWORD+"@navek-vjwuz.mongodb.net/test?retryWrites=true" ,{ useNewUrlParser: true }).then(()=>{
   console.log("DataBase Is Connected");
 }).catch(()=>{
   console.log("DataBase Connection failed");
